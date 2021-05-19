@@ -473,8 +473,8 @@ class Mysqli
         if (empty($columns)) {
             $columns = '*';
         }
-        $column = is_array($columns) ? implode(', ', $columns) : $columns;
-        $this->query = 'SELECT ' . implode(' ', $this->queryOptions) . ' ' .
+        $column = is_array($columns) ? implode($columns, ', ') : $columns;
+        $this->query = 'SELECT ' . implode($this->queryOptions, ' ') . ' ' .
             $column . ' FROM ' . $this->tableName;
         $stmt = $this->buildQuery($numRows);
 
@@ -1526,7 +1526,7 @@ class Mysqli
         if ($this->config->isSubQuery()) {
             return null;
         }
-        $this->query = $operation . " " . implode(' ', $this->queryOptions) . " INTO " . $tableName;
+        $this->query = $operation . " " . implode($this->queryOptions, ' ') . " INTO " . $tableName;
         $stmt = $this->buildQuery(null, $insertData);
         try {
             if ($this->isFetchSql){
@@ -1612,7 +1612,7 @@ class Mysqli
             foreach ($customFieldsOrRegExp as $key => $value) {
                 $customFieldsOrRegExp[$key] = preg_replace("/[^-a-z0-9\.\(\),_` ]+/i", '', $value);
             }
-            $orderByField = 'FIELD (' . $orderByField . ', "' . implode('","', $customFieldsOrRegExp) . '")';
+            $orderByField = 'FIELD (' . $orderByField . ', "' . implode($customFieldsOrRegExp, '","') . '")';
         } elseif (is_string($customFieldsOrRegExp)) {
             $orderByField = $orderByField . " REGEXP '" . $customFieldsOrRegExp . "'";
         } elseif ($customFieldsOrRegExp !== null) {
