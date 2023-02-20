@@ -1241,7 +1241,7 @@ class Mysqli
         $dataColumns = array_keys($tableData);
         if ($isInsert) {
             if (isset ($dataColumns[0]))
-                $this->query .= ' (`' . implode($dataColumns, '`, `') . '`) ';
+                $this->query .= ' (`' . implode( '`, `',$dataColumns) . '`) ';
             $this->query .= ' VALUES (';
         } else {
             $this->query .= " SET ";
